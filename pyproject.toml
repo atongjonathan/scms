@@ -1,0 +1,26 @@
+[project]
+name = "education"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "JONATHAN ATONG",email = "110544038+atongjonathan@users.noreply.github.com"}
+]
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "django (>=5.2.4,<6.0.0)",
+    "psycopg (>=3.2.9,<4.0.0)",
+    "dotenv (>=0.9.9,<0.10.0)",
+    "whitenoise (>=6.9.0,<7.0.0)",
+    "pillow (>=11.3.0,<12.0.0)"
+]
+
+[tool.poetry]
+packages = [{include = "education", from = "src"}]
+package-mode = false
+
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"

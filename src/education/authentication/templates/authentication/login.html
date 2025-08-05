@@ -1,0 +1,66 @@
+{% extends "authentication/base.html" %}
+{% load i18n static %}
+
+{% block title %}{% if form.email.errors %}{% translate "Error:" %} {% endif %}{{ block.super }}{% endblock %}
+{% block form %}
+<form action="{% url 'login' %}" method="post" id="loginForm" class="n-stack">
+    {% csrf_token %}
+        <!-- Render the email field -->
+        <nord-input
+            label="Email"
+            expand
+            required
+            hide-required
+            hide-label
+            name="email"
+            type="email"
+            id="emailField"
+            placeholder="user@example.com"
+            value="{{ form.email.value|default:'' }}"
+            error="{% if form.email.errors %}{{ form.email.errors.0 }}{% endif %}"
+            aria-autocomplete="both"
+            
+        >
+        <nord-icon slot="start" name="generic-mail"></nord-icon>
+    </nord-input>
+
+        <!-- Hidden username field, will be set by JS -->
+        <input type="hidden" name="username" id="usernameField">
+
+        <!-- Render the password field -->
+            <nord-input
+                label="Password"
+                expand
+                required
+                hide-required
+                name="password"
+                type="password"
+                value="{{ form.password.value|default:'' }}"
+                error="{% if form.password.errors %}{{ form.password.errors.0 }}{% endif %}"
+                hide-label
+            >
+                <nord-icon slot="start" name="interface-lock"></nord-icon>
+            </nord-input>
+                <a href="{% url 'password_reset' %}" class="underline n-color-text-link text-right text-xs">
+                    Forgot Password?
+                  </a>   
+            
+
+            <!-- Submit button -->
+    <nord-button type="submit" expand variant="primary">Login</nord-button>
+    <!-- <p class="text-center">or</p>
+    <nord-button type="submit" expand>Login with Email Link</nord-button> -->
+</form>
+
+<script>
+    // JavaScript to set the username field based on email input
+    document.getElementById('loginForm').addEventListener('submit', function (event) {
+        const email = document.getElementById('emailField').value;
+        const usernameField = document.getElementById('usernameField');
+
+        if (email && !usernameField.value) {
+            usernameField.value = email;  // Set email as username
+        }
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "authentication/base.html" %}
+
+{% block form %}
+<form action="{% url 'password_reset' %}" method="post" class="n-stack">
+    {% csrf_token %}
+        <!-- Render the email field -->
+        <nord-input
+            label="Email"
+            expand
+            required
+            hide-required
+            hide-label
+            name="email"
+            type="email"
+            id="emailField"
+            placeholder="Email Address"
+            value="{{ form.email.value|default:'' }}"
+            error="{% if form.email.errors %}{{ form.email.errors.0 }}{% endif %}"
+            aria-autocomplete="both"
+            
+        >
+        <nord-icon slot="start" name="generic-mail"></nord-icon>
+    </nord-input> 
+    <p>{{custom_message}}</p>
+            
+
+            <!-- Submit button -->
+    <nord-button type="submit" expand variant="primary">Reset Password</nord-button>
+    <nord-button href="{% url 'login' %}" expand>Back to Login</nord-button>
+</form>
+
+{% endblock %}

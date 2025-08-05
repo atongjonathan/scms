@@ -1,0 +1,16 @@
+:root {
+    --n-color-accent: #195e2a;
+    --n-avatar-color: #195e2a;
+}
+
+.password {
+    position: relative;
+}
+
+.password a {
+    text-decoration: none;
+    font-size: var(--n-font-size-s);
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-end: 0;
+}

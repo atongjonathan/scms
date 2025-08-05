@@ -1,0 +1,36 @@
+{% extends 'app/base.html' %}
+{% load i18n static %}
+
+{% block content %}
+<nord-stack class="mx-auto pt-20 lg:pt-11" style="max-inline-size: 340px;">
+
+    <nord-stack justifyContent="center" alignItems="center" class="flex items-center justify-center">
+        <nord-avatar name="Laura Williams" size="xxl" src="{% static 'app/icons/apple-icon.png' %}"></nord-avatar>
+        <h1 class="n-font-size-xl n-font-weight-heading">{% translate heading %}</h1>
+    </nord-stack>
+
+    {% if form.non_field_errors %}
+        {% for error in form.non_field_errors %}
+            <nord-banner shadow variant="warning">{{ error }}</nord-banner>
+        {% endfor %}
+    {% endif %}
+
+    {% if user.is_authenticated %}
+        <nord-banner shadow variant="warning">
+            {% blocktranslate %}
+                You are authenticated as {{ user.username }}, but are not authorized to
+                access this page. Would you like to log in to a different account?
+            {% endblocktranslate %}
+        </nord-banner>
+    {% endif %}
+
+
+    <nord-card padding="l">
+        {% block form %}
+        {% endblock %}
+    </nord-card>
+
+   
+</nord-stack>
+
+{% endblock %}

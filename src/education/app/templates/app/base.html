@@ -1,0 +1,182 @@
+{% load i18n static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %} {% endblock %}</title>
+    <link
+      rel="stylesheet"
+      href="https://nordcdn.net/ds/tokens/8.0.0/tokens.custom-properties.css"
+      integrity="sha384-e9mOMJSpfGwiX45hcBT+NmrETj3qMJev3mJgb93XR2ydEYLPnR5em5Kr0AUV5o3i"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://nordcdn.net/ds/fonts/3.0.3/fonts.css"
+      integrity="sha384-dkSLlcNlq50O3Ils6+x72v07BbSaUb10p9/GEuuIJBcR1d0Nn+lDdvUQoXYz2Dq9"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://nordcdn.net/ds/css/4.1.0/nord.min.css"
+      integrity="sha384-9FV4ikmPiDEn1F2NuHi9J8BThbSFNWbgombQ9SNY9Jh0H/WWC40owQakNeJL7Jeg"
+      crossorigin="anonymous"
+    />
+
+    <!-- Light theme (default) -->
+    <link
+      rel="stylesheet"
+      id="light-theme"
+      href="https://nordcdn.net/ds/css/4.1.0/nord.min.css"
+      integrity="sha384-9FV4ikmPiDEn1F2NuHi9J8BThbSFNWbgombQ9SNY9Jh0H/WWC40owQakNeJL7Jeg"
+      crossorigin="anonymous"
+    />
+
+    <!-- Dark theme (conditionally loaded) -->
+    <link
+      rel="stylesheet"
+      id="dark-theme"
+      href="https://nordcdn.net/ds/themes/9.0.0/nord-dark.css"
+      integrity="sha384-4mfQkitA1YUssjHukrfVhopnhPw9eM2tX8Z05rZ/5NJRmDJN1fQp2gGfwydx2SzL"
+      crossorigin="anonymous"
+      disabled
+    />
+    <script
+      type="module"
+      src="https://nordcdn.net/ds/components/4.5.0/index.js"
+      integrity="sha384-OwSkYLIJbTWjgADB5REz7XKEHyyNB+suxkNap4Di9yt7QUOU75f62Z1iA++wyhSn"
+      crossorigin="anonymous"
+    ></script>
+
+    {% comment %} Tailwind {% endcomment %}
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <link
+      rel="apple-touch-icon"
+      sizes="57x57"
+      href='{% static "app/icons/apple-icon-57x57.png" %}'
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="60x60"
+      href='{% static "app/icons/apple-icon-60x60.png" %}'
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="72x72"
+      href='{% static "app/icons/apple-icon-72x72.png" %}'
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="76x76"
+      href='{% static "app/icons/apple-icon-76x76.png" %}'
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="114x114"
+      href='{% static "app/icons/apple-icon-114x114.png" %}'
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="120x120"
+      href='{% static "app/icons/apple-icon-120x120.png" %}'
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="144x144"
+      href='{% static "app/icons/apple-icon-144x144.png" %}'
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="152x152"
+      href='{% static "app/icons/apple-icon-152x152.png" %}'
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href='{% static "app/icons/apple-icon-180x180.png" %}'
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href='{% static "app/icons/android-icon-192x192.png" %}'
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href='{% static "app/icons/favicon-32x32.png" %}'
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="96x96"
+      href='{% static "app/icons/favicon-96x96.png" %}'
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href='{% static "app/icons/favicon-16x16.png" %}'
+    />
+    <link rel="manifest" href='{% static "app/icons/manifest.json" %}' />
+    <link rel="stylesheet" href='{% static "app/css/style.css" %}' >
+    <meta name="msapplication-TileColor" content="#ffffff" />
+    <meta
+      name="msapplication-TileImage"
+      content='{% static "app/icons/ms-icon-144x144.png" %}'
+    />
+    <meta name="theme-color" content="#ffffff" />
+  </head>
+  <style>
+    :root {
+    --n-color-accent: #195e2a;
+    --n-avatar-color: #195e2a;
+}
+  </style>
+  <body class="n-typeset">
+    <nord-layout padding="none">
+      <nord-top-bar slot="top-bar" class="n-color-accent">
+      
+
+        {% block topbarcontent %}
+        <div class="px-8">
+          <nord-button variant="primary" href="{% url 'app:index' %}">{% translate 'Home' %}</nord-button>
+        </div>
+     
+{% endblock %}
+
+    </nord-top-bar>
+    {% block content %} {% endblock %}
+  </nord-layout>
+    <script>
+
+      {% comment %} const refresh = window.location.reload() {% endcomment %}
+        // Get the theme preference from localStorage or system preference
+        let theme = localStorage.getItem("theme");
+        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        if (theme === "auto") {
+            theme = prefersDarkScheme ? "dark" : "light";
+        }
+
+        if (theme === null) {
+            theme = "light"; // Default to light mode if no preference set
+            localStorage.setItem("theme", "light");
+        }
+
+        // Apply the appropriate theme by toggling the disabled attribute
+        if (theme === "dark") {
+            document.getElementById("dark-theme").disabled = false; // Enable dark theme
+            document.getElementById("light-theme").disabled = true; // Disable light theme
+        } else {
+            document.getElementById("dark-theme").disabled = true; // Disable dark theme
+            document.getElementById("light-theme").disabled = false; // Enable light theme
+        }
+
+        // Optionally, you can save the theme preference to localStorage for future visits
+        localStorage.setItem("theme", theme);
+    </script>
+  </body>
+</html>
