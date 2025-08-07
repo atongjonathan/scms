@@ -4,14 +4,10 @@
 
 
 
-{% block content %}
-<nord-stack class="mx-auto pt-20" style="max-inline-size: 340px;">
-    <nord-card>
-        <p>{% translate "Thanks for spending some quality time with the web site today." %}</p>    
-        <nord-button slot="footer" variant="primary" href="{% url 'app:index' %}">{% translate 'Log in again' %}</nord-button></p>
-    </nord-card>
-</nord-stack>
+{% block form %}
 
+<p>{% translate "Thanks for spending some quality time with the web site today." %}</p>    
+<nord-button slot="footer" variant="primary" href="{% url 'app:index' %}">{% translate 'Log in again' %}</nord-button></p>
 
 
 {% endblock %}

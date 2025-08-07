@@ -5,8 +5,11 @@
 <nord-stack class="mx-auto pt-20 lg:pt-11" style="max-inline-size: 340px;">
 
     <nord-stack justifyContent="center" alignItems="center" class="flex items-center justify-center">
-        <nord-avatar name="Laura Williams" size="xxl" src="{% static 'app/icons/apple-icon.png' %}"></nord-avatar>
-        <h1 class="n-font-size-xl n-font-weight-heading">{% translate heading %}</h1>
+        <a href="{% url 'app:index' %}">
+            <nord-avatar name="Laura Williams" size="xxl" src="{% static 'app/icons/apple-icon.png' %}"></nord-avatar>
+        </a>
+        
+        <h1 class="n-font-size-xl n-font-weight-title">{% translate title %}</h1>
     </nord-stack>
 
     {% if form.non_field_errors %}
@@ -15,14 +18,6 @@
         {% endfor %}
     {% endif %}
 
-    {% if user.is_authenticated %}
-        <nord-banner shadow variant="warning">
-            {% blocktranslate %}
-                You are authenticated as {{ user.username }}, but are not authorized to
-                access this page. Would you like to log in to a different account?
-            {% endblocktranslate %}
-        </nord-banner>
-    {% endif %}
 
 
     <nord-card padding="l">

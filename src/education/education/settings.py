@@ -26,7 +26,7 @@ load_dotenv(os.path.join(BASE_DIR, '.env'))
 SECRET_KEY = 'django-insecure-exu_a3ll@)1+@wr6+l9-6xj$m1#tew3r76a=czftfe0_0s0b_6'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
 
@@ -95,11 +95,11 @@ LOGGING = {
         "file": {
             "level": os.getenv('LOGGING_FILE_LEVEL', "INFO"),
             "class": "logging.FileHandler",
-            "filename": "SCMS.log",
+            "filename": "ScMS.log",
             "formatter": "simple",
         },
         "mail_admins": {
-            "level": "ERROR",
+            "level": "CRITICAL",
             "class": "django.utils.log.AdminEmailHandler",
             "include_html": True,
             "email_backend": "django.core.mail.backends.smtp.EmailBackend",
@@ -155,7 +155,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
-LANGUAGE_CODE = 'sw-KE'
+LANGUAGE_CODE = 'en-KE'
 
 TIME_ZONE = 'UTC'
 
@@ -193,10 +193,13 @@ EMAIL_HOST = os.environ.get('EMAIL_HOST', 'smtp.gmail.com')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', "")
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', "")
 EMAIL_PORT = os.environ.get('EMAIL_PORT', 587)
-EMAIL_SUBJECT_PREFIX = "SCMS"
+EMAIL_SUBJECT_PREFIX = "ScMS"
 EMAIL_USE_LOCALTIME = True
 EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS', True)
 EMAIL_USE_SSL = os.environ.get('EMAIL_USE_SSL', False)
 SERVER_EMAIL = os.environ.get('DEFAULT_EMAIL_FROM', "")
 if EMAIL_HOST == "smtp.gmail.com":
     EMAIL_HOST_PASSWORD += "\n"
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

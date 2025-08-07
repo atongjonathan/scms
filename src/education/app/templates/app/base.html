@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{% block title %} {% endblock %}</title>
+    <title>{% block title %} {% translate title %} {% endblock %}</title>
     <link
       rel="stylesheet"
       href="https://nordcdn.net/ds/tokens/8.0.0/tokens.custom-properties.css"
@@ -137,17 +137,18 @@
   </style>
   <body class="n-typeset">
     <nord-layout padding="none">
+
+      {% if not request.user.username %}
       <nord-top-bar slot="top-bar" class="n-color-accent">
       
 
-        {% block topbarcontent %}
         <div class="px-8">
           <nord-button variant="primary" href="{% url 'app:index' %}">{% translate 'Home' %}</nord-button>
         </div>
      
-{% endblock %}
 
     </nord-top-bar>
+    {% endif %}
     {% block content %} {% endblock %}
   </nord-layout>
     <script>
