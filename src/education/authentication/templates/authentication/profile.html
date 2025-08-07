@@ -1,0 +1,64 @@
+{% extends "app/layout.html" %}
+{% load i18n static %}
+
+
+{% block page %}
+<nord-header slot="header">
+  <h1 class="n-typescale-l">{{ title }}</h1>
+  <nord-button slot="end" href="{% url 'profile_edit' user.email%}" variant="primary">
+    <nord-icon  slot="start" name="interface-edit" label="Options"></nord-icon>
+    Edit</nord-button>
+</nord-header>
+
+<nord-stack class="n-padding-m">
+    <nord-card padding="l">
+      <div class="n-grid-2">
+        <div class="n-stack">
+          <nord-input 
+              name="first_name" 
+              label="First Name" 
+              value="{{ object.first_name }}" 
+              readonly 
+              expand>
+          </nord-input>
+
+          <nord-input 
+              name="middle_name" 
+              label="Middle Name" 
+              value="{{ object.middle_name }}" 
+              readonly 
+              expand>
+          </nord-input>
+
+          <nord-input 
+              name="last_name" 
+              label="Last Name" 
+              value="{{ object.last_name }}" 
+              readonly 
+              expand>
+          </nord-input>
+        </div>
+
+        <div class="n-stack">
+          <nord-input 
+              name="mobile_number" 
+              label="Mobile Number" 
+              value="{{ object.mobile_number }}" 
+              disallow-pattern="[^0-9]" 
+              readonly 
+              expand>
+          </nord-input>
+
+          <nord-input 
+              name="user_image" 
+              label="Profile Picture" 
+              value="{{ object.user_image }}" 
+              readonly 
+              expand>
+              <nord-icon slot="start" name="interface-link"></nord-icon>
+          </nord-input>
+        </div>
+      </div>
+    </nord-card>
+</nord-stack>
+{% endblock %}

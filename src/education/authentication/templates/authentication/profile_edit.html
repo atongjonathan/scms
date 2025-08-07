@@ -1,0 +1,129 @@
+{% extends "app/layout.html" %}
+{% load i18n static %}
+
+{% block title %}
+  {% if form.errors %}
+    {% translate "Error:" %} 
+  {% endif %}
+  {{ block.super }}
+{% endblock %}
+
+{% block page %}
+<nord-header slot="header">
+  <h1 class="n-typescale-l">{{ title }}</h1>
+</nord-header>
+
+<nord-stack class="n-padding-m">
+    <form method="post" enctype="multipart/form-data">
+
+    <nord-card padding="l">
+      <div class="n-grid-2">
+        {% csrf_token %}
+        <div class="n-stack">
+
+          <nord-input 
+              name="first_name" 
+              label="First Name" 
+              value="{{ form.first_name.value|default:'' }}"               
+              expand>
+          </nord-input>
+
+          <nord-input 
+              name="middle_name" 
+              label="Middle Name" 
+              value="{{ form.middle_name.value|default:'' }}"               
+              expand>
+          </nord-input>
+
+          <nord-input 
+              name="last_name" 
+              label="Last Name" 
+              value="{{ form.last_name.value|default:'' }}"               
+              expand>
+          </nord-input>
+        </div>
+
+        <div class="n-stack">
+          <nord-input 
+              name="mobile_number" 
+              label="Mobile Number" 
+              value="{{ form.mobile_number.value|default:'' }}" 
+              disallow-pattern="[^0-9]"               
+              expand>
+          </nord-input>
+
+  
+
+          {% if object.user_image %}
+          <div id="existing-image-section">
+            <nord-input 
+                name="user_image_display" 
+                label="Current Profile Picture" 
+                value="{{ object.user_image.url }}" 
+                readonly 
+                expand>
+                <nord-icon slot="start" name="interface-link"></nord-icon>
+                <nord-button slot="end" type="button" onclick="clearImage()">Clear</nord-button>
+            </nord-input>
+          </div>
+          <div id="upload-new-image-section" style="display: none;">
+        {% else %}
+            <div id="upload-new-image-section">
+        {% endif %}
+                <nord-fieldset label="Profile Picture">
+                  <nord-stack direction="horizontal" wrap>
+                    <nord-button 
+                    type="button" 
+                    variant="secondary" 
+                    onclick="document.getElementById('real-file-input').click();">
+                    <nord-icon slot="start" name="interface-link"></nord-icon>
+                  Attach
+                  </nord-button>
+                  <p id="selected-file-name" class="pt-2 n-color-text-link underline my-auto"></p>
+                  </nord-stack>             
+
+                </nord-fieldset>
+            </div>
+          </div>
+
+          <input type="file" name="user_image" hidden id="real-file-input" accept="image/*" onchange="handleFileSelected(this)">
+          <input type="checkbox" name="clear_user_image" hidden>
+
+    </div>
+
+      <nord-button slot="footer" type="submit" expand variant="primary">
+        Update Profile
+      </nord-button>
+    </nord-card>
+  </form>
+</nord-stack>
+
+
+<script>
+  function handleFileSelected(input) {
+    const fileName = input.files.length ? input.files[0].name : 'No file selected';
+    document.getElementById('selected-file-name').textContent = fileName;
+    
+    // If user selects a new file, ensure the clear checkbox is unchecked
+    document.querySelector('input[name="clear_user_image"]').checked = false;
+  }
+
+  function clearImage() {
+    // Clear the file input (reset the form field)
+    const fileInput = document.getElementById('real-file-input');
+    fileInput.value = ''; // this clears the file input
+
+    // Mark the clear checkbox
+    document.querySelector('input[name="clear_user_image"]').checked = true;
+
+    // Clear the preview text
+    document.getElementById('selected-file-name').textContent = 'Image removed';
+
+    // Optional: hide the nord-input with image info, show the attach button
+    document.getElementById('existing-image-section').style.display = 'none';
+    document.getElementById('upload-new-image-section').style.display = 'block';
+  }
+</script>
+
+
+{% endblock %}

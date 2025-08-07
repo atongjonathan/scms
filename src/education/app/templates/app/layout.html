@@ -2,9 +2,8 @@
 {% load static i18n %}
 {% block content %}
 
-
   <nord-navigation slot="nav">
-      <nord-button slot="header" variant="primary" class="n-color-accent" expand>
+      <nord-button slot="header" variant="primary" class="n-color-accent" expand href="{% url 'index' %}">
         <nord-avatar slot="start" name="Bath Clinic" variant="square">B</nord-avatar>
         Bath Clinic
       </nord-button>
@@ -115,16 +114,16 @@
 
     <nord-dropdown slot="end">
       <nord-button variant="plain" slot="toggle" aria-describedby="user-tooltip">
-        <nord-avatar style="transform: translateY(-1px)" name="{{user.full_name}}" class="uppercase" src="{{ user.user_image.url }}"></nord-avatar>
+        <nord-avatar style="transform: translateY(-1px)" name="{{user.full_name}}" class="uppercase" src="{% if user.user_image %}  {{user.user_image.url}} {% endif %}"></nord-avatar>
       </nord-button>
-      <nord-avatar slot="header" size="s" name="{{user.full_name}}" src="{{ user.user_image.url.url }}" class="uppercase">{{user.full_name|slice:":2"}}</nord-avatar>
+      <nord-avatar slot="header" size="s" name="{{user.full_name}}" src="{% if user.user_image %}  {{user.user_image.url}} {% endif %}" class="uppercase">{{user.full_name|slice:":2"}}</nord-avatar>
       <p slot="header" class="n-color-text-weak n-font-size-s">
         Signed in as <span class="n-font-weight-active">{{user.full_name}}</span>
       </p>
       <nord-dropdown-group>
-        <nord-dropdown-item>My profile</nord-dropdown-item>
+        <nord-dropdown-item title="My profile" onclick="window.location.assign('{% url 'profile' user.email %}')">My profile</nord-dropdown-item>
         <nord-dropdown-item>Account Settings</nord-dropdown-item>
-        <nord-dropdown-item onclick="window.location.assign('{% url 'password_change' %}')">Change password</nord-dropdown-item>
+        <nord-dropdown-item title="Change password" onclick="window.location.assign('{% url 'password_change' %}')">Change password</nord-dropdown-item>
       </nord-dropdown-group>
       <nord-dropdown-group>
         <nord-dropdown-item>
