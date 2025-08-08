@@ -141,6 +141,15 @@
       </nord-dropdown-item>
     </nord-dropdown>
     <nord-tooltip id="user-tooltip">{{user.full_name}}</nord-tooltip>
+    <nord-button id="lightBtn" slot="end" variant="primary" onclick="setTheme('light')" aria-describedby="lightBtn-tooltip">
+      <nord-icon slot="start" name="interface-mode-light"></nord-icon>
+    </nord-button>
+    <nord-button id="darkBtn" slot="end" variant="primary" onclick="setTheme('dark')" aria-describedby="darkBtn-tooltip">
+      <nord-icon slot="start" name="interface-mode-dark"></nord-icon>
+    </nord-button>
+    <nord-tooltip id="lightBtn-tooltip">Light Mode</nord-tooltip>
+    <nord-tooltip id="darkBtn-tooltip">Dark Mode</nord-tooltip>
+    
     
   </nord-top-bar>
 
@@ -152,5 +161,8 @@
 
  {% endblock page %}
 
-<script src='{% static "app/js/reload.js" %}'></script>
+<script src='{% static "app/js/layout.js" %}'></script>
+
+
+
 {% endblock content %}

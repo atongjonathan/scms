@@ -151,33 +151,5 @@
     {% endif %}
     {% block content %} {% endblock %}
   </nord-layout>
-    <script>
-
-      {% comment %} const refresh = window.location.reload() {% endcomment %}
-        // Get the theme preference from localStorage or system preference
-        let theme = localStorage.getItem("theme");
-        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-        if (theme === "auto") {
-            theme = prefersDarkScheme ? "dark" : "light";
-        }
-
-        if (theme === null) {
-            theme = "light"; // Default to light mode if no preference set
-            localStorage.setItem("theme", "light");
-        }
-
-        // Apply the appropriate theme by toggling the disabled attribute
-        if (theme === "dark") {
-            document.getElementById("dark-theme").disabled = false; // Enable dark theme
-            document.getElementById("light-theme").disabled = true; // Disable light theme
-        } else {
-            document.getElementById("dark-theme").disabled = true; // Disable dark theme
-            document.getElementById("light-theme").disabled = false; // Enable light theme
-        }
-
-        // Optionally, you can save the theme preference to localStorage for future visits
-        localStorage.setItem("theme", theme);
-    </script>
   </body>
 </html>
