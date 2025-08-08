@@ -13,11 +13,12 @@ phone_validator = RegexValidator(
 
 class EUser(AbstractUser):
     email = models.EmailField(unique=True)
+    first_name = models.CharField(_("first name"), max_length=150)
     user_image = models.ImageField(
         upload_to='user_images/', blank=True)
     USERNAME_FIELD = 'email'
     middle_name = models.CharField(
-        _("middle name"), max_length=150, blank=True, null=True)
+        _("middle name"), max_length=150, blank=True, null=False)
     mobile_number = models.CharField(
         max_length=16, validators=[phone_validator], null=True, blank=True)
     REQUIRED_FIELDS = ['username', 'first_name']

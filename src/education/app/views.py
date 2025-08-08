@@ -1,17 +1,12 @@
-from math import log, perm
-from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from django.urls import reverse_lazy
 from django.views.generic import TemplateView
 from django.utils.decorators import method_decorator
 from django.contrib.auth import views as auth_views
 from django.views.generic import UpdateView
 from django.views.generic.detail import DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .forms import ProfileForm
 from authentication.models import EUser
 from django.core.exceptions import PermissionDenied
-# Create your views here.
 
 
 @method_decorator(login_required, name="dispatch")
@@ -67,10 +62,14 @@ class UpdateProfile(LoginRequiredMixin, UpdateView):
         kwargs.update(
             {"title": f'Update Profile - {self.request.user.full_name}'})
         return super().get_context_data(**kwargs)
-    
+
+    def form_invalid(self, form):
+        print(form.error_class)
+        return super().form_invalid(form)
+
     def form_valid(self, form):
         if self.request.POST.get('clear_user_image'):
             form.instance.user_image.delete(save=False)
-            form.instance.user_image = None 
+            form.instance.user_image = None
 
         return super().form_valid(form)

@@ -24,21 +24,31 @@
           <nord-input 
               name="first_name" 
               label="First Name" 
-              value="{{ form.first_name.value|default:'' }}"               
+              value="{{ form.first_name.value|default:'' }}"   
+              error="{% if form.first_name.errors %}
+              {{ form.first_name.errors.0 }}         
+            {% endif %}"  
+              required          
               expand>
           </nord-input>
 
           <nord-input 
               name="middle_name" 
               label="Middle Name" 
-              value="{{ form.middle_name.value|default:'' }}"               
+              value="{{ form.middle_name.value|default:'' }}"  
+              error="{% if form.middle_name.errors %}
+              {{ form.middle_name.errors.0 }}         
+            {% endif %}"             
               expand>
           </nord-input>
 
           <nord-input 
               name="last_name" 
               label="Last Name" 
-              value="{{ form.last_name.value|default:'' }}"               
+              value="{{ form.last_name.value|default:'' }}" 
+              error="{% if form.last_name.errors %}
+              {{ form.last_name.errors.0 }}         
+            {% endif %}"              
               expand>
           </nord-input>
         </div>
@@ -48,7 +58,10 @@
               name="mobile_number" 
               label="Mobile Number" 
               value="{{ form.mobile_number.value|default:'' }}" 
-              disallow-pattern="[^0-9]"               
+              disallow-pattern="[^0-9]"    
+              error="{% if form.mobile_number.errors %}
+              {{ form.mobile_number.errors.0 }}         
+            {% endif %}"           
               expand>
           </nord-input>
 
@@ -61,7 +74,10 @@
                 label="Current Profile Picture" 
                 value="{{ object.user_image.url }}" 
                 readonly 
-                expand>
+                expand
+                {% if form.user_image.errors %}
+                error="{{ form.user_image.errors.0 }}"     
+              {% endif %}>
                 <nord-icon slot="start" name="interface-link"></nord-icon>
                 <nord-button slot="end" type="button" onclick="clearImage()">Clear</nord-button>
             </nord-input>
@@ -70,7 +86,9 @@
         {% else %}
             <div id="upload-new-image-section">
         {% endif %}
-                <nord-fieldset label="Profile Picture">
+                <nord-fieldset label="Profile Picture" error="{% if form.user_image.errors %}
+                {{ form.user_image.errors.0 }}         
+              {% endif %}">
                   <nord-stack direction="horizontal" wrap>
                     <nord-button 
                     type="button" 
@@ -90,10 +108,14 @@
           <input type="checkbox" name="clear_user_image" hidden>
 
     </div>
-
-      <nord-button slot="footer" type="submit" expand variant="primary">
+    <nord-button-group slot="footer" variant="spaced" class="flex justify-end">
+      <nord-button href="{% url 'profile' user.email %}" expand>
+        Discard
+      </nord-button>
+      <nord-button type="submit" expand variant="primary">
         Update Profile
       </nord-button>
+    </nord-button-group>     
     </nord-card>
   </form>
 </nord-stack>
