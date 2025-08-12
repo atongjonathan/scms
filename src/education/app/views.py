@@ -63,10 +63,6 @@ class UpdateProfile(LoginRequiredMixin, UpdateView):
             {"title": f'Update Profile - {self.request.user.full_name}'})
         return super().get_context_data(**kwargs)
 
-    def form_invalid(self, form):
-        print(form.error_class)
-        return super().form_invalid(form)
-
     def form_valid(self, form):
         if self.request.POST.get('clear_user_image'):
             form.instance.user_image.delete(save=False)

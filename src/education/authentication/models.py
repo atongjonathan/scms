@@ -4,6 +4,7 @@ from django.conf import settings
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.core.validators import RegexValidator
+from .storages_backends import R2UserImageStorage
 
 phone_validator = RegexValidator(
     regex=r'^\+?\d{9,15}$',
@@ -15,7 +16,7 @@ class EUser(AbstractUser):
     email = models.EmailField(unique=True)
     first_name = models.CharField(_("first name"), max_length=150)
     user_image = models.ImageField(
-        upload_to='user_images/', blank=True)
+        upload_to='scms_user_images/', storage=R2UserImageStorage(), blank=True)
     USERNAME_FIELD = 'email'
     middle_name = models.CharField(
         _("middle name"), max_length=150, blank=True, null=False)
