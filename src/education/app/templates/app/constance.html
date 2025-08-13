@@ -1,0 +1,90 @@
+{% extends "app/layout.html" %}
+{% load i18n static %}
+
+{% block title %}
+  {% if form.errors %}
+    {% translate "Error:" %} 
+  {% endif %}
+  {{ block.super }}
+{% endblock %}
+
+{% block page %}
+<nord-header slot="header">
+  <h1 class="n-typescale-l">{% translate title %}</h1>
+</nord-header>
+<form method="post" enctype="multipart/form-data">{% csrf_token %}
+  <nord-stack>
+
+  <nord-card padding="l">
+    <div class="n-grid-2">
+      <div class="n-stack">
+        <nord-input
+        label="Site name"
+        expand
+        required
+        name="name"
+        value="{{ form.initial.name|default:'' }}"
+        error="{% if form.name.errors %}
+        {% translate form.name.errors.0 %}
+              {% endif %}"
+      ></nord-input>
+      </div>
+      <div class="n-stack">
+  
+     
+  
+  
+  
+        {% if form.initial.logo %}
+        <div id="existing-image-section">
+          <nord-input 
+              name="logo_display" 
+              label="Site logo" 
+              value="{{ form.initial.logo }}" 
+              readonly 
+              expand
+              {% if form.logo.errors %}
+              error="{{ form.logo.errors.0 }}"     
+            {% endif %}>
+              <nord-icon slot="start" name="interface-link"></nord-icon>
+              <nord-button slot="end" type="button" onclick="clearImage()">Clear</nord-button>
+          </nord-input>
+        </div>
+        <div id="upload-new-image-section" style="display: none;">
+      {% else %}
+          <div id="upload-new-image-section">
+      {% endif %}
+              <nord-fieldset label="Site logo" error="{% if form.logo.errors %}
+              {{ form.logo.errors.0 }}         
+            {% endif %}">
+                <nord-stack direction="horizontal" wrap>
+                  <nord-button 
+                  type="button" 
+                  variant="secondary" 
+                  onclick="document.getElementById('real-file-input').click();">
+                  <nord-icon slot="start" name="interface-link"></nord-icon>
+                Attach
+                </nord-button>
+                <p id="selected-file-name" class="pt-2 n-color-text-link underline my-auto"></p>
+                </nord-stack>             
+  
+              </nord-fieldset>
+          </div>
+        </div>
+  
+        <input type="file" name="logo" hidden id="real-file-input" accept="image/*" onchange="handleFileSelected(this)">
+        <input type="checkbox" name="clear_image" hidden>      <!-- Submit Button -->
+      </div>
+    </div>
+
+   
+
+      <input type="hidden" hidden name="version" value="{{ form.initial.version }}">
+      <nord-button type="submit" slot="footer" expand variant="primary">Save</nord-button>
+  </nord-card>
+</nord-stack>
+
+</form>
+<script src='{% static "app/js/file_input.js" %}'></script>
+
+{% endblock %}

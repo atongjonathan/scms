@@ -1,7 +1,10 @@
 from storages.backends.s3boto3 import S3Boto3Storage
-from django.conf import settings
+import os
+
 
 class R2UserImageStorage(S3Boto3Storage):
-    bucket_name = settings.R2_BUCKET_NAME
-    endpoint_url = f"https://{settings.R2_ACCOUNT_ID}.r2.cloudflarestorage.com"
+    bucket_name = os.getenv("R2_BUCKET_NAME")
+    account_id = os.getenv("R2_ACCOUNT_ID")
+    endpoint_url = f"https://{account_id}.r2.cloudflarestorage.com"
     default_acl = "public-read"
+    file_overwrite = False

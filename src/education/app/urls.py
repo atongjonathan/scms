@@ -11,5 +11,6 @@ urlpatterns = [
          views.Profile.as_view(), name="profile"),
     path('profile/<str:email>/edit',
          views.UpdateProfile.as_view(), name="profile_edit"),
+    path('settings', views.ConstanceView.as_view(), name='settings')
 
 ]

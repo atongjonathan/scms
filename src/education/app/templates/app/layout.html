@@ -2,15 +2,17 @@
 {% load static i18n %}
 {% block content %}
 
+{% get_media_prefix as MEDIA_URL %}
+
   <nord-navigation slot="nav">
       <nord-button slot="header" variant="primary" class="n-color-accent" expand href="{% url 'index' %}">
-        <nord-avatar slot="start" name="Bath Clinic" variant="square">B</nord-avatar>
-        Bath Clinic
+        <nord-avatar slot="start" name="Bath Clinic" variant="square" src="{{ MEDIA_URL }}{{ config.logo }}">{{config.name|slice:":2"}}</nord-avatar>
+        {{config.name}}
       </nord-button>
    
     <nord-nav-group heading="Workspace">
       <nord-nav-item href="#" icon="navigation-dashboard">Dashboard</nord-nav-item>
-      <nord-nav-item href="#" icon="navigation-settings">Settings</nord-nav-item>
+      <nord-nav-item href="{% url 'settings' %}" icon="navigation-settings">Settings</nord-nav-item>
     </nord-nav-group>
     <nord-dropdown expand slot="footer">
       <nord-button class="help-toggle" slot="toggle" expand>
@@ -162,6 +164,7 @@
  {% endblock page %}
 
 <script src='{% static "app/js/layout.js" %}'></script>
+<script src='{% static "app/js/theme.js" %}'></script>
 
 
 

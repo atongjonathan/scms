@@ -1,4 +1,6 @@
 from django.contrib.auth.decorators import login_required
+from django.forms import Form
+from django.urls import reverse_lazy
 from django.views.generic import TemplateView
 from django.utils.decorators import method_decorator
 from django.contrib.auth import views as auth_views
@@ -7,6 +9,13 @@ from django.views.generic.detail import DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from authentication.models import EUser
 from django.core.exceptions import PermissionDenied
+from django.views.generic.edit import FormView
+from constance.forms import ConstanceForm
+from constance.utils import get_values
+from authentication.storages_backends import R2UserImageStorage
+from django.core.files.uploadedfile import UploadedFile
+from os.path import join
+from django.core.files.storage import default_storage
 
 
 @method_decorator(login_required, name="dispatch")
@@ -67,5 +76,33 @@ class UpdateProfile(LoginRequiredMixin, UpdateView):
         if self.request.POST.get('clear_user_image'):
             form.instance.user_image.delete(save=False)
             form.instance.user_image = None
+
+        return super().form_valid(form)
+
+
+class ConstanceView(FormView):
+    template_name = 'app/constance.html'
+    form_class = ConstanceForm
+    success_url = reverse_lazy("settings")
+    extra_context = {"title": "App Settings"}
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['initial'] = get_values()
+        return kwargs
+
+    def form_valid(self, form: ConstanceForm):
+        clear_logo = self.request.POST.get('clear_image')
+
+        if clear_logo:
+            from constance import config
+            if config.logo:
+                try:
+                    default_storage.delete(config.logo)
+                except Exception:
+                    pass
+            form.cleaned_data['logo'] = None
+
+        form.save()
 
         return super().form_valid(form)

@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'constance',
     'storages',
     'authentication',
     'app'
@@ -69,6 +70,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'constance.context_processors.config'
             ],
         },
     },
@@ -215,10 +217,28 @@ AWS_S3_ENDPOINT_URL = f"https://{R2_ACCOUNT_ID}.r2.cloudflarestorage.com"
 # Make uploaded files public (optional)
 AWS_DEFAULT_ACL = "public-read"
 
-# Use S3 storage for media
-DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
-
 # If you want MEDIA_URL to be R2 URL:
-MEDIA_URL = f"{AWS_S3_ENDPOINT_URL}/{R2_BUCKET_NAME}/"
 
 AWS_S3_CUSTOM_DOMAIN = os.getenv("AWS_S3_CUSTOM_DOMAIN")
+
+
+# Constance settings
+CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
+
+CONSTANCE_DATABASE_PREFIX = 'constance:education:'
+CONSTANCE_IGNORE_ADMIN_VERSION_CHECK = True
+
+
+CONSTANCE_CONFIG = {
+
+    'logo': ('', 'Site logo', 'image_field'),
+    'name': ('ScMS', 'Site name', 'required_char')
+}
+
+CONSTANCE_ADDITIONAL_FIELDS = {
+    'image_field': ['django.forms.ImageField', {}],
+    'required_char': ('django.forms.CharField', {'required': True}),
+
+}
+
+MEDIA_URL = "/media/"

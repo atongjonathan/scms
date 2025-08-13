@@ -12,10 +12,9 @@
 <nord-header slot="header">
   <h1 class="n-typescale-l">{{ title }}</h1>
 </nord-header>
+<form method="post" enctype="multipart/form-data">
 
-<nord-stack class="n-padding-m">
-    <form method="post" enctype="multipart/form-data">
-
+<nord-stack>
     <nord-card padding="l">
       <div class="n-grid-2">
         {% csrf_token %}
@@ -71,7 +70,7 @@
           <div id="existing-image-section">
             <nord-input 
                 name="user_image_display" 
-                label="Current Profile Picture" 
+                label="Profile Picture" 
                 value="{{ object.user_image.url }}" 
                 readonly 
                 expand
@@ -105,7 +104,7 @@
           </div>
 
           <input type="file" name="user_image" hidden id="real-file-input" accept="image/*" onchange="handleFileSelected(this)">
-          <input type="checkbox" name="clear_user_image" hidden>
+          <input type="checkbox" name="clear_image" hidden>
 
     </div>
     <nord-button-group slot="footer" variant="spaced" class="flex justify-end">
@@ -117,35 +116,11 @@
       </nord-button>
     </nord-button-group>     
     </nord-card>
-  </form>
 </nord-stack>
+</form>
 
 
-<script>
-  function handleFileSelected(input) {
-    const fileName = input.files.length ? input.files[0].name : 'No file selected';
-    document.getElementById('selected-file-name').textContent = fileName;
-    
-    // If user selects a new file, ensure the clear checkbox is unchecked
-    document.querySelector('input[name="clear_user_image"]').checked = false;
-  }
-
-  function clearImage() {
-    // Clear the file input (reset the form field)
-    const fileInput = document.getElementById('real-file-input');
-    fileInput.value = ''; // this clears the file input
-
-    // Mark the clear checkbox
-    document.querySelector('input[name="clear_user_image"]').checked = true;
-
-    // Clear the preview text
-    document.getElementById('selected-file-name').textContent = 'Image removed';
-
-    // Optional: hide the nord-input with image info, show the attach button
-    document.getElementById('existing-image-section').style.display = 'none';
-    document.getElementById('upload-new-image-section').style.display = 'block';
-  }
-</script>
+<script src='{% static "app/js/file_input.js" %}'></script>
 
 
 {% endblock %}
