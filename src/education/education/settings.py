@@ -231,14 +231,18 @@ CONSTANCE_IGNORE_ADMIN_VERSION_CHECK = True
 
 CONSTANCE_CONFIG = {
 
-    'logo': ('', 'Site logo', 'image_field'),
+    'logo': ('', 'Site logo', 'logo_field'),
     'name': ('ScMS', 'Site name', 'required_char')
 }
 
 CONSTANCE_ADDITIONAL_FIELDS = {
-    'image_field': ['django.forms.ImageField', {}],
+    'logo_field': ['django.forms.ImageField'],
     'required_char': ('django.forms.CharField', {'required': True}),
 
 }
 
 MEDIA_URL = "/media/"
+
+FILE_ROOT = MEDIA_URL
+
+MEDIA_ROOT = BASE_DIR / "media"

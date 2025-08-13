@@ -34,23 +34,6 @@ class PasswordChangeDone(auth_views.PasswordChangeDoneView):
     extra_context = {"title": "Password change successful"}
 
 
-class Profile(LoginRequiredMixin, DetailView):
-    model = EUser
-    template_name = "authentication/profile.html"
-    slug_field = "email"
-    slug_url_kwarg = "email"
-
-    def get_object(self, queryset=None):
-        obj = super().get_object(queryset)
-        if obj != self.request.user:
-            raise PermissionDenied("You cannot view another user's profile.")
-        return obj
-
-    def get_context_data(self, **kwargs):
-        kwargs.update({
-            "title": f"Profile - {self.request.user.full_name}",
-        })
-        return super().get_context_data(**kwargs)
 
 
 class UpdateProfile(LoginRequiredMixin, UpdateView):
@@ -73,8 +56,10 @@ class UpdateProfile(LoginRequiredMixin, UpdateView):
         return super().get_context_data(**kwargs)
 
     def form_valid(self, form):
-        if self.request.POST.get('clear_user_image'):
-            form.instance.user_image.delete(save=False)
+        if self.request.POST.get('clear_image'):
+            default_storage.delete(form.instance.user_image.name)
+            form.instance.user_image.delete(save=True)
+            form.cleaned_data['user_image'] = None
             form.instance.user_image = None
 
         return super().form_valid(form)

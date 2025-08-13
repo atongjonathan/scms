@@ -6,13 +6,40 @@
 
   <nord-navigation slot="nav">
       <nord-button slot="header" variant="primary" class="n-color-accent" expand href="{% url 'index' %}">
-        <nord-avatar slot="start" name="Bath Clinic" variant="square" src="{{ MEDIA_URL }}{{ config.logo }}">{{config.name|slice:":2"}}</nord-avatar>
+        <nord-avatar slot="start" class="uppercase" name="Bath Clinic" variant="square" src="{{ MEDIA_URL }}{{ config.logo }}">{{config.name|slice:":2"}}</nord-avatar>
         {{config.name}}
       </nord-button>
    
     <nord-nav-group heading="Workspace">
-      <nord-nav-item href="#" icon="navigation-dashboard">Dashboard</nord-nav-item>
-      <nord-nav-item href="{% url 'settings' %}" icon="navigation-settings">Settings</nord-nav-item>
+      {% url 'index' as home_url %}
+      <nord-nav-item 
+          href="{{home_url}}" 
+          icon="navigation-dashboard" 
+          {% if request.path == home_url %} active="true" {% endif %}>
+          Dashboard
+    </nord-nav-item>
+
+      {% url 'settings' as settings_url %}
+        <nord-nav-item href="{{settings_url}}" icon="navigation-settings"
+        {% if request.path == settings_url %}active="true"{% endif %}>
+        Settings
+      </nord-nav-item>
+    </nord-nav-group>
+    <nord-nav-group heading="Profile">
+     {% url 'profile_edit' user.email as profile_edit_url %}
+      <nord-nav-item 
+          icon="navigation-dashboard" 
+          href="{{profile_edit_url}}" {% if request.path == profile_edit_url %} active="true" {% endif %}
+         >
+          My Profile
+       
+    </nord-nav-item>
+
+      {% url 'password_change' as password_change_url %}
+        <nord-nav-item href="{{password_change_url}}" icon="navigation-settings"
+        {% if request.path == password_change_url %}active="true"{% endif %}>
+        Change password
+      </nord-nav-item>
     </nord-nav-group>
     <nord-dropdown expand slot="footer">
       <nord-button class="help-toggle" slot="toggle" expand>
@@ -116,14 +143,14 @@
 
     <nord-dropdown slot="end">
       <nord-button variant="plain" slot="toggle" aria-describedby="user-tooltip">
-        <nord-avatar style="transform: translateY(-1px)" name="{{user.full_name}}" class="uppercase" src="{% if user.user_image %}  {{user.user_image.url}} {% endif %}"></nord-avatar>
+        <nord-avatar style="transform: translateY(-1px)" name="{{user.full_name}}" class="uppercase" src="{% if user.user_image %}  {{user.user_image.url}} {% endif %}">{{user.full_name|slice:":2"}}</nord-avatar>
       </nord-button>
       <nord-avatar slot="header" size="s" name="{{user.full_name}}" src="{% if user.user_image %}  {{user.user_image.url}} {% endif %}" class="uppercase">{{user.full_name|slice:":2"}}</nord-avatar>
       <p slot="header" class="n-color-text-weak n-font-size-s">
         Signed in as <span class="n-font-weight-active">{{user.full_name}}</span>
       </p>
       <nord-dropdown-group>
-        <nord-dropdown-item title="My profile" onclick="window.location.assign('{% url 'profile' user.email %}')">My profile</nord-dropdown-item>
+        <nord-dropdown-item title="My profile" onclick="window.location.assign('{% url 'profile_edit' user.email %}')">My profile</nord-dropdown-item>
         <nord-dropdown-item>Account Settings</nord-dropdown-item>
         <nord-dropdown-item title="Change password" onclick="window.location.assign('{% url 'password_change' %}')">Change password</nord-dropdown-item>
       </nord-dropdown-group>
@@ -143,14 +170,14 @@
       </nord-dropdown-item>
     </nord-dropdown>
     <nord-tooltip id="user-tooltip">{{user.full_name}}</nord-tooltip>
-    <nord-button id="lightBtn" slot="end" variant="primary" onclick="setTheme('light')" aria-describedby="lightBtn-tooltip">
+    <nord-button id="darkBtn" slot="end" variant="primary" onclick="setTheme('light')" aria-describedby="lightBtn-tooltip">
       <nord-icon slot="start" name="interface-mode-light"></nord-icon>
     </nord-button>
-    <nord-button id="darkBtn" slot="end" variant="primary" onclick="setTheme('dark')" aria-describedby="darkBtn-tooltip">
+    <nord-button id="lightBtn" slot="end" variant="primary" onclick="setTheme('dark')" aria-describedby="darkBtn-tooltip">
       <nord-icon slot="start" name="interface-mode-dark"></nord-icon>
     </nord-button>
-    <nord-tooltip id="lightBtn-tooltip">Light Mode</nord-tooltip>
-    <nord-tooltip id="darkBtn-tooltip">Dark Mode</nord-tooltip>
+    <nord-tooltip id="darkBtn-tooltip">Light Mode</nord-tooltip>
+    <nord-tooltip id="lightBtn-tooltip">Dark Mode</nord-tooltip>
     
     
   </nord-top-bar>
@@ -164,7 +191,6 @@
  {% endblock page %}
 
 <script src='{% static "app/js/layout.js" %}'></script>
-<script src='{% static "app/js/theme.js" %}'></script>
 
 
 

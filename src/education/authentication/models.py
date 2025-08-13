@@ -16,7 +16,7 @@ class EUser(AbstractUser):
     email = models.EmailField(unique=True)
     first_name = models.CharField(_("first name"), max_length=150)
     user_image = models.ImageField(
-        upload_to='media/user_images/', blank=True)
+        upload_to='user_images/', blank=True)
     USERNAME_FIELD = 'email'
     middle_name = models.CharField(
         _("middle name"), max_length=150, blank=True, null=False)
@@ -25,7 +25,7 @@ class EUser(AbstractUser):
     REQUIRED_FIELDS = ['username', 'first_name']
 
     def get_absolute_url(self):
-        return reverse("profile", kwargs={"email": self.email})
+        return reverse("profile_edit", kwargs={"email": self.email})
 
     @property
     def full_name(self):
