@@ -73,23 +73,38 @@
     --n-avatar-color: #195e2a;
 }
   </style>
-  <body class="n-typeset">
-    <nord-layout>
+ <body class="n-typeset">
+  <!-- Loading Screen -->
+  <div id="loading-screen" class="fixed inset-0 flex items-center justify-center n-background z-50">
+    <nord-spinner size="l" label="Loading, please wait"></nord-spinner>
 
-      {% if not request.user.username %}
-      <nord-top-bar slot="top-bar" class="n-color-accent">
-      
+  </div>
 
-        <div class="px-8">
-          <nord-button variant="primary" href="{% url 'index' %}">{% translate 'Home' %}</nord-button>
-        </div>
-     
-
+  <!-- Main Layout (hidden initially) -->
+  <nord-layout id="main-layout" class="hidden">
+    {% if not request.user.username %}
+    <nord-top-bar slot="top-bar" class="n-color-accent">
+      <div class="px-8">
+        <nord-button variant="primary" href="{% url 'index' %}">
+          {% translate 'Home' %}
+        </nord-button>
+      </div>
     </nord-top-bar>
     {% endif %}
-    {% block content %} {% endblock %}
+
+    {% block content %}{% endblock %}
   </nord-layout>
-  </body>
+
+  <script>
+    window.addEventListener("load", function () {
+      // Hide loading screen
+      document.getElementById("loading-screen").classList.add("hidden");
+      // Show main content
+      document.getElementById("main-layout").classList.remove("hidden");
+    });
+  </script>
+</body>
+
   <script src='{% static "app/js/theme.js" %}'></script>
 
 </html>
