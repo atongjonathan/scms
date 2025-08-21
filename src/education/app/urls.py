@@ -3,12 +3,7 @@ from . import views
 
 urlpatterns = [
     path("", views.Index.as_view(), name='index'),
-    path('password-change',
-         views.PasswordChange.as_view(), name="password_change"),
-    path('password-change/done',
-         views.PasswordChangeDone.as_view(), name="password_change_done"),
+    path('settings', views.ConstanceView.as_view(), name='settings'),
     path('profile/<str:email>',
          views.UpdateProfile.as_view(), name="profile_edit"),
-    path('settings', views.ConstanceView.as_view(), name='settings')
-
 ]

@@ -28,18 +28,15 @@ class Logout(auth_views.LogoutView):
 
 class PasswordReset(auth_views.PasswordResetView):
     template_name = "authentication/password_reset_form.html"
-    extra_context = {"title": "Password Reset"}
     title = "Password change"
 
 
 class PasswordResetConfirm(auth_views.PasswordResetConfirmView):
     template_name = "authentication/password_reset_confirm.html"
-    extra_context = {"title": "Enter new password"}
 
 
 class PasswordResetDone(auth_views.PasswordResetDoneView):
     template_name = "authentication/password_reset_done.html"
-    extra_context = {"title": "Password Reset"}
 
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
@@ -47,9 +44,11 @@ class PasswordResetDone(auth_views.PasswordResetDoneView):
 
 class PasswordResetComplete(auth_views.PasswordResetCompleteView):
     template_name = "authentication/password_reset_complete.html"
-    extra_context = {"title": "Password reset complete"}
 
 
+class PasswordChange(auth_views.PasswordChangeView):
+    template_name = "authentication/password_change_form.html"
 
 
-
+class PasswordChangeDone(auth_views.PasswordChangeDoneView):
+    template_name = "authentication/password_change_done.html"

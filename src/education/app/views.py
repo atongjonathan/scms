@@ -24,14 +24,6 @@ class Index(TemplateView):
     extra_context = {"title": "Home"}
 
 
-class PasswordChange(auth_views.PasswordChangeView):
-    template_name = "authentication/password_change_form.html"
-    extra_context = {"title": "Password change"}
-
-
-class PasswordChangeDone(auth_views.PasswordChangeDoneView):
-    template_name = "authentication/password_change_done.html"
-    extra_context = {"title": "Password change successful"}
 
 
 
