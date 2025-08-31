@@ -63,7 +63,7 @@
   <meta name="msapplication-TileColor" content="#ffffff" />
 
 
-    <link rel="icon" type="image/png" href='{{ MEDIA_URL }}{{ config.logo }}'>
+    <link rel="icon" type="image/png" href='{% if config.logo %}{{ MEDIA_URL }}{{ config.logo }}{% endif %}'>
   
     <meta name="theme-color" content="#ffffff" />
   </head>
@@ -75,13 +75,14 @@
   </style>
  <body class="n-typeset">
   <!-- Loading Screen -->
-  <div id="loading-screen" class="fixed inset-0 flex items-center justify-center n-background z-50">
-    <nord-spinner size="l" label="Loading, please wait"></nord-spinner>
-
+  <div id="loading-screen" class="fixed inset-0 flex items-center justify-center bg-surface z-50 transition-opacity duration-300">
+    <nord-stack spacing="l" alignItems="center" class="text-center">
+      <nord-spinner size="l" label="Loading, please wait"></nord-spinner>
+    </nord-stack>
   </div>
 
-  <!-- Main Layout (hidden initially) -->
-  <nord-layout id="main-layout" class="hidden">
+  <!-- Main Layout -->
+  <nord-layout id="main-layout" class="opacity-0 transition-opacity duration-300">
     {% if not request.user.username %}
     <nord-top-bar slot="top-bar" class="n-color-accent">
       <div class="px-8">
@@ -111,18 +112,9 @@
       {% endif %}
   </nord-toast-group>
   </nord-layout>
+
   
-   
-  <script>
-    window.addEventListener("load", function () {
-      // Hide loading screen
-      document.getElementById("loading-screen").classList.add("hidden");
-      // Show main content
-      document.getElementById("main-layout").classList.remove("hidden");
-    });
-  </script>
 </body>
 
-  <script src='{% static "app/js/theme.js" %}'></script>
 
 </html>
