@@ -1,6 +1,10 @@
 from django.contrib.auth import authenticate
 from django.contrib.auth import views as auth_views
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import redirect
+from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
+from django.contrib import messages
 
 
 class Login(auth_views.LoginView):
@@ -52,3 +56,7 @@ class PasswordChange(auth_views.PasswordChangeView):
 
 class PasswordChangeDone(auth_views.PasswordChangeDoneView):
     template_name = "authentication/password_change_done.html"
+    
+    def get(self, request, *args, **kwargs):
+        messages.success(request, _("Your password was changed successfully!"))
+        return HttpResponseRedirect(reverse_lazy('index'))

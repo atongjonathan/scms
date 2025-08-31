@@ -92,9 +92,21 @@
     </nord-top-bar>
     {% endif %}
 
+ 
+   
     {% block content %}{% endblock %}
+    <nord-toast-group>
+      {% if messages %}
+        {% for message in messages %}
+          <nord-toast class="flex self-end">
+            {{ message }}
+          </nord-toast>
+        {% endfor %}
+      {% endif %}
+  </nord-toast-group>
   </nord-layout>
-
+  
+   
   <script>
     window.addEventListener("load", function () {
       // Hide loading screen

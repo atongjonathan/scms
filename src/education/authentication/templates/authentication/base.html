@@ -3,6 +3,13 @@
 
 {% block content %}
 <nord-stack class="mx-auto pt-20 lg:pt-11" style="max-inline-size: 340px;">
+    {% if messages %}
+        {% for message in messages %}
+            <nord-toast variant="{% if message.tags == 'success' %}success{% elif message.tags == 'error' %}danger{% else %}{{message.tags}}{% endif %}" autoclose="5000">
+                {{ message }}
+            </nord-toast>
+        {% endfor %}
+    {% endif %}
 
     <nord-stack justifyContent="center" alignItems="center" class="flex items-center justify-center">
         <a href="{% url 'index' %}">
