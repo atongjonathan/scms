@@ -30,7 +30,8 @@ class EUser(AbstractUser):
     @property
     def full_name(self):
         "Returns the user's full name."
-        return self.get_full_name()
+        full_name = "%s %s %s" % (self.first_name, self.middle_name, self.last_name)
+        return full_name.strip()
 
     def __str__(self):
         return self.username
