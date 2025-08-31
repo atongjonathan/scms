@@ -159,6 +159,10 @@
           Keyboard commands
           <div slot="end" class="n-color-text-weaker n-font-size-xs">Cmd+K</div>
         </nord-dropdown-item>
+        <nord-dropdown-item id="themeToggle" onclick="toggleTheme()">
+          Light Mode
+          <nord-icon slot="end" name="interface-mode-light"></nord-icon>
+        </nord-dropdown-item>
         <nord-dropdown-item>Help & Support</nord-dropdown-item>
       </nord-dropdown-group>
       <form id="logoutForm" method="post" action="{% url 'logout'%}">
@@ -170,14 +174,7 @@
       </nord-dropdown-item>
     </nord-dropdown>
     <nord-tooltip id="user-tooltip">{{user.full_name}}</nord-tooltip>
-    <nord-button id="darkBtn" slot="end" variant="primary" onclick="setTheme('light')" aria-describedby="lightBtn-tooltip">
-      <nord-icon slot="start" name="interface-mode-light"></nord-icon>
-    </nord-button>
-    <nord-button id="lightBtn" slot="end" variant="primary" onclick="setTheme('dark')" aria-describedby="darkBtn-tooltip">
-      <nord-icon slot="start" name="interface-mode-dark"></nord-icon>
-    </nord-button>
-    <nord-tooltip id="darkBtn-tooltip">Light Mode</nord-tooltip>
-    <nord-tooltip id="lightBtn-tooltip">Dark Mode</nord-tooltip>
+
     
     
   </nord-top-bar>

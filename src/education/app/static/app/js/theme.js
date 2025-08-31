@@ -1,6 +1,4 @@
-const lightBtn = document.getElementById('lightBtn');
-const darkBtn = document.getElementById('darkBtn');
-
+const themeToggle = document.getElementById('themeToggle');
 const lightTheme = document.getElementById("light-theme");
 const darkTheme = document.getElementById("dark-theme");
 
@@ -19,13 +17,10 @@ if (theme === null) {
 
 applyTheme(theme);
 
-lightBtn.addEventListener("click", () => {
-    setTheme("light");
-});
-
-darkBtn.addEventListener("click", () => {
-    setTheme("dark");
-});
+function toggleTheme() {
+    const newTheme = localStorage.getItem("theme") === "light" ? "dark" : "light";
+    setTheme(newTheme);
+}
 
 function setTheme(newTheme) {
     localStorage.setItem("theme", newTheme);
@@ -33,19 +28,13 @@ function setTheme(newTheme) {
 }
 
 function applyTheme(theme) {
-    if (theme === "dark") {
-        darkTheme.disabled = false;
-        lightTheme.disabled = true;
+    const isDark = theme === "dark";
+    darkTheme.disabled = !isDark;
+    lightTheme.disabled = isDark;
 
-        // Show the light button to switch back
-        lightBtn.style.display = "inline-block";
-        darkBtn.style.display = "none";
-    } else {
-        darkTheme.disabled = true;
-        lightTheme.disabled = false;
-
-        // Show the dark button to switch back
-        lightBtn.style.display = "none";
-        darkBtn.style.display = "inline-block";
-    }
+    // Update button text and icon
+    themeToggle.innerHTML = `
+        ${isDark ? 'Light' : 'Dark'} Mode
+        <nord-icon slot="end" name="interface-mode-${isDark ? 'light' : 'dark'}"></nord-icon>
+    `;
 }
