@@ -48,20 +48,3 @@ function applyTheme(theme) {
 }
 
 
- document.addEventListener('DOMContentLoaded', () => {
-      const loadingScreen = document.getElementById('loading-screen');
-      const mainLayout = document.getElementById('main-layout');
-
-      window.addEventListener('load', () => {
-        // Fade out loading screen
-        loadingScreen.classList.add('opacity-0');
-        
-        // Fade in main layout
-        mainLayout.classList.remove('opacity-0');
-        
-        // Remove loading screen after transition
-        setTimeout(() => {
-          loadingScreen.remove();
-        }, 300);
-      });
-    });

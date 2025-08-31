@@ -76,8 +76,8 @@
  <body class="n-typeset">
   <!-- Loading Screen -->
   <div id="loading-screen" class="fixed inset-0 flex items-center justify-center bg-surface z-50 transition-opacity duration-300">
-    <nord-stack spacing="l" alignItems="center" class="text-center">
-      <nord-spinner size="l" label="Loading, please wait"></nord-spinner>
+    <nord-stack spacing="l">
+      <nord-spinner size="xl" label="Loading, please wait" class="mx-auto flex self-center"></nord-spinner>
     </nord-stack>
   </div>
 
@@ -116,5 +116,24 @@
   
 </body>
 
+<script>
+   document.addEventListener('DOMContentLoaded', () => {
+      const loadingScreen = document.getElementById('loading-screen');
+      const mainLayout = document.getElementById('main-layout');
+
+      window.addEventListener('load', () => {
+        // Fade out loading screen
+        loadingScreen.classList.add('opacity-0');
+        
+        // Fade in main layout
+        mainLayout.classList.remove('opacity-0');
+        
+        // Remove loading screen after transition
+        setTimeout(() => {
+          loadingScreen.remove();
+        }, 300);
+      });
+    });
+</script>
 
 </html>
