@@ -16,7 +16,8 @@ from authentication.storages_backends import R2UserImageStorage
 from django.core.files.uploadedfile import UploadedFile
 from os.path import join
 from django.core.files.storage import default_storage
-
+from django.contrib import messages
+from django.utils.translation import gettext_lazy as _
 
 @method_decorator(login_required, name="dispatch")
 class Index(TemplateView):
@@ -48,12 +49,12 @@ class UpdateProfile(LoginRequiredMixin, UpdateView):
         return super().get_context_data(**kwargs)
 
     def form_valid(self, form):
+        messages.success(self.request, _("Profile saved"))
         if self.request.POST.get('clear_image'):
             default_storage.delete(form.instance.user_image.name)
             form.instance.user_image.delete(save=True)
             form.cleaned_data['user_image'] = None
             form.instance.user_image = None
-
         return super().form_valid(form)
 
 

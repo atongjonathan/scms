@@ -98,9 +98,15 @@
     <nord-toast-group>
       {% if messages %}
         {% for message in messages %}
-          <nord-toast class="flex self-end">
-            {{ message }}
-          </nord-toast>
+          {% if 'error' in message.tags %}
+            <nord-toast class="mx-auto" variant="danger">
+              {{ message }}
+            </nord-toast>
+          {% else %}
+            <nord-toast class="mx-auto">
+              {{ message }}
+            </nord-toast>
+          {% endif %}
         {% endfor %}
       {% endif %}
   </nord-toast-group>

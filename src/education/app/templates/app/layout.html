@@ -6,7 +6,7 @@
 
   <nord-navigation slot="nav">
       <nord-button slot="header" variant="primary" class="n-color-accent" expand href="{% url 'index' %}">
-        <nord-avatar slot="start" class="uppercase" name="Bath Clinic" variant="square" src="{{ MEDIA_URL }}{{ config.logo }}">{{config.name|slice:":2"}}</nord-avatar>
+        <nord-avatar slot="start" class="uppercase" name="Bath Clinic" variant="square" src="{% if config.logo %}{{ MEDIA_URL }}{{ config.logo }}{% endif %}">{{config.name|slice:":2"}}</nord-avatar>
         {{config.name}}
       </nord-button>
    
